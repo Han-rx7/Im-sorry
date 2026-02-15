@@ -26,6 +26,11 @@
             text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
             animation: shimmer 2s ease-in-out infinite alternate;
         }
+        .note {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            color: #d63384;
+        }
         .sparkle {
             position: absolute;
             font-size: 1.5em;
@@ -171,14 +176,16 @@
 </head>
 <body>
     <h1>I'm Sorry, My Love ❤️</h1>
+    <div class="note">If on Safari (iOS), tap the page first, then click Play Music.</div>
     <button onclick="playMusic()">Play Music</button>
     <p>Listen to "Sorry" by Justin Bieber while you read my apology. Click the button below to reveal it.</p>
-    <!-- Hidden audio, attempts autoplay -->
+    <!-- Hidden audio -->
     <audio id="bgMusic" loop>
-        <source src="sorry" type="audio/mpeg"> <!-- Matches your file name "sorry" -->
-        <source src="sorry.mp3" type="audio/mpeg"> <!-- Fallback if you rename to .mp3 -->
+        <source src="sorry.mp3" type="audio/mpeg"> <!-- Prioritize MP3 for Safari -->
+        <source src="sorry" type="audio/mpeg">
         <source src="sorry.wav" type="audio/wav">
         <source src="sorry.ogg" type="audio/ogg">
+        <source src="sorry.m4a" type="audio/mp4"> <!-- Add M4A if you have it -->
         Your browser does not support the audio element.
     </audio>
     <button onclick="revealApology()">Reveal My Apology</button>
@@ -232,9 +239,9 @@
         function playMusic() {
             const music = document.getElementById('bgMusic');
             music.play().then(() => {
-                console.log('Music started successfully!');
+                alert('Music is playing! If it stops, click Play Music again.');
             }).catch(e => {
-                console.log('Music play failed. Error: ' + e + '. Try clicking again or check browser settings.');
+                alert('Music failed to play. Try tapping the page first or use Chrome on iOS. Error: ' + e.message);
             });
         }
 
@@ -264,14 +271,6 @@
             flowerSection.style.display = 'block';
             flowerSection.scrollIntoView({ behavior: 'smooth' });
         }
-
-        // Optional: Attempt autoplay on load (may still be blocked)
-        window.onload = function() {
-            const music = document.getElementById('bgMusic');
-            music.play().catch(e => {
-                console.log('Autoplay blocked; use the Play Music button. Error: ' + e);
-            });
-        };
     </script>
 </body>
 </html>
