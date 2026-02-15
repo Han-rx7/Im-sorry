@@ -124,7 +124,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 15px rgba(255, 105, 180, 0.5);
             position: relative;
             overflow: hidden;
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Added for better text visibility */
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
         }
         button:hover {
             animation: pulse 1s infinite;
@@ -171,9 +171,10 @@
 </head>
 <body>
     <h1>I'm Sorry, My Love ❤️</h1>
+    <button onclick="playMusic()">Play Music</button>
     <p>Listen to "Sorry" by Justin Bieber while you read my apology. Click the button below to reveal it.</p>
     <!-- Hidden audio, attempts autoplay -->
-    <audio id="bgMusic" autoplay loop>
+    <audio id="bgMusic" loop>
         <source src="sorry" type="audio/mpeg"> <!-- Matches your file name "sorry" -->
         <source src="sorry.mp3" type="audio/mpeg"> <!-- Fallback if you rename to .mp3 -->
         <source src="sorry.wav" type="audio/wav">
@@ -228,6 +229,15 @@
         }
         setInterval(createPetal, 3000);
 
+        function playMusic() {
+            const music = document.getElementById('bgMusic');
+            music.play().then(() => {
+                console.log('Music started successfully!');
+            }).catch(e => {
+                console.log('Music play failed. Error: ' + e + '. Try clicking again or check browser settings.');
+            });
+        }
+
         function revealApology() {
             // Trigger mixed burst effect (hearts and stars)
             const items = ['❤️', '💖', '💕', '⭐'];
@@ -255,13 +265,11 @@
             flowerSection.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Attempt autoplay on load with logging
+        // Optional: Attempt autoplay on load (may still be blocked)
         window.onload = function() {
             const music = document.getElementById('bgMusic');
-            music.play().then(() => {
-                console.log('Music autoplay successful!');
-            }).catch(e => {
-                console.log('Autoplay blocked or failed. Error: ' + e + '. Try enabling autoplay in browser settings or use a different browser.');
+            music.play().catch(e => {
+                console.log('Autoplay blocked; use the Play Music button. Error: ' + e);
             });
         };
     </script>
